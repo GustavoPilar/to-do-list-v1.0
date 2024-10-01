@@ -7,7 +7,9 @@ public final class Afazer  {
     private Prioridade prioridade;
     private Status status;
 
-    public Afazer() {}
+    public Afazer() {
+        status = Status.PROCESSANDO;
+    }
 
     public Afazer(String titulo, Prioridade prioridade) {
         this.titulo = titulo;

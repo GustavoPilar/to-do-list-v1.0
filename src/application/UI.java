@@ -10,7 +10,7 @@ public final class UI {
 
     public static void __init__() throws IOException, InterruptedException {
         int opcao;
-
+        clearScreen();
         System.out.print("Digite o seu nome: ");
         pessoa.setNome(Main.sc.nextLine());
 
@@ -19,21 +19,18 @@ public final class UI {
             System.out.println("| [1] - To-do-list");
             System.out.println("| [2] - Sair");
             System.out.println("|----------------------------|");
-            System.out.print("Esolha: ");
-            opcao = Main.sc.nextInt();
-            Main.sc.nextLine();
+            opcao = escolherOpcao(1, 2, "Escolha: ");
 
             switch (opcao) {
                 case 1 -> toDoList();
-                case 2 -> System.out.println("Saindo...");
-                default -> System.out.println("Valor inválido.");
+                default -> System.out.println("Saindo...");
             }
         } while (opcao != 2);
     }
 
     public static void toDoList() throws IOException, InterruptedException {
 
-        int escolha;
+        int opcao;
         do {
             clearScreen();
             verLista();
@@ -43,36 +40,36 @@ public final class UI {
             System.out.println("[3] - Mudar prioridade");
             System.out.println("[4] - Mudar status");
             System.out.println("[5] - Voltar");
-            System.out.print("Esolha: " );
-            escolha = Main.sc.nextInt();
-            Main.sc.nextLine();
+            opcao = escolherOpcao(1, 5, "Escolha: ");
 
-            switch (escolha) {
+            switch (opcao) {
                 case 1:
+                    clearScreen();
                     pessoa.getListaAfazeres().adicionarAfazer();
                     pause();
                     break;
                 case 2:
+                    clearScreen();
+                    verLista();
                     pessoa.getListaAfazeres().removerAfazer();
                     pause();
                     break;
                 case 3:
+                    clearScreen();
+                    verLista();
                     pessoa.getListaAfazeres().mudarPrioridade();
                     pause();
                     break;
                 case 4:
+                    clearScreen();
+                    verLista();
                     pessoa.getListaAfazeres().mudarStatus();
                     pause();
                     break;
-                case 5:
-                    System.out.println("Voltando...");
-                    pause();
-                    break;
                 default:
-                    System.out.println("Valor inválido");
-                    pause();
+                    System.out.println("Voltando...");
             }
-        } while (escolha != 5);
+        } while (opcao != 5);
 
     }
 
@@ -98,5 +95,26 @@ public final class UI {
             Thread.sleep(1000);
         }
         System.out.println();
+    }
+
+    public static int escolherOpcao(int min, int max, String msg) {
+        System.out.print(msg);
+        int opcao = Main.sc.nextInt();
+        Main.sc.nextLine();
+
+        while (opcao < min || opcao > max) {
+            System.out.print("Opcao invalida. Digite novamente: ");
+            opcao = Main.sc.nextInt();
+            Main.sc.nextLine();
+        }
+
+        return opcao;
+    }
+
+    public static boolean confirmarAcao(String acao) {
+        System.out.printf("Deseja mesmo %s?\n[1] - Sim\n[2] - Não\n", acao);
+        int opcao = UI.escolherOpcao(1, 2, "Escolha: ");
+
+        return opcao == 1;
     }
 }
