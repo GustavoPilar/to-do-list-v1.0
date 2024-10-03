@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public final class ListaAfazeres {
 
@@ -50,7 +51,7 @@ public final class ListaAfazeres {
             System.out.println("Afazer adicionado!");
         }
         else {
-            System.out.println("Afazer adicinado");
+            System.out.println("Afazer não adicinado!");
         }
 
     }
@@ -71,7 +72,7 @@ public final class ListaAfazeres {
                 System.out.println("Afazer removido!");
             }
             else {
-                System.out.println("Afazer não removido");
+                System.out.println("Afazer não removido!");
             }
         }
     }
@@ -145,6 +146,12 @@ public final class ListaAfazeres {
     public void arrumarLista() {
         Comparator<Afazer> comp = Comparator.comparing(Afazer::getPrioridade);
         afazeres.sort(comp);
+    }
+
+    public double porcentagemConcluida() {
+        List<Afazer> concluidos = afazeres.stream().filter(x -> x.getStatus() == Status.CONCLUIDO).toList();
+
+        return (double) (concluidos.size() * 100 ) / afazeres.size();
     }
 
     @Override
